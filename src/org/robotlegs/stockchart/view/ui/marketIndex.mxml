@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="{init()}"
+		 xmlns:view="org.robotlegs.demos.helloflex.view.*"    xmlns:ui="sss.Shelpers.Shelpers.ui.*"
+	 >
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			
+			import org.robotlegs.stockchart.model.vo.StockVO;
+			
+			import sss.Shelpers.Shelpers.ListHelpers;
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			import sss.Shelpers.vos.Indexxer;
+			
+			import sss2.JrlV4.vos.CategoryVO;
+			[Bindable] public var stock  :   StockVO = new StockVO() 			
+			
+			public function init()  : void
+			{
+				ShelpersUI.removeScrollbars( this )
+ 				for each ( var j : Label in this.ltlTitle.getChildren() ) 
+				{
+					if ( j.id == null ) 
+							continue
+						j.setStyle('color', 0x666666 );
+				}
+			}			
+			
+			 
+						
+		]]>
+	</mx:Script>
+	
+	<mx:HBox verticalAlign="bottom"  horizontalGap="0" y="10" x="10">
+		<mx:Label text="{this.stock.price}" id="priceStock" fontSize="30"  fontWeight="bold"/>
+		<mx:Label text="{this.stock.diff}" id="lblPriceDip" fontSize="24"  fontWeight="bold" color="0xAA0033"/>
+		<mx:Label text="{this.stock.percentageChange}%" id="lblPercnegate" fontSize="24"  fontWeight="bold"  color="0xAA0033"/>
+	</mx:HBox>
+	
+	<mx:Tile id="ltlTitle" x="250" y="10" right="0"
+		direction="horizontal" 
+		paddingRight="0" paddingLeft="0" 
+		verticalGap="0" horizontalGap="10" 
+		tileWidth="65">
+		<mx:Label text="Range"   />
+		<mx:Label text="{this.stock.range}" id="txtlblRange" />
+		<mx:Label text="Mkt cap" />
+		<mx:Label text="{this.stock.mktcap}" id="txtMkCap" />
+
+		<mx:Label text="52 week"   />
+		<mx:Label text="{this.stock.week52}" id="txtlbl52" />
+		<mx:Label text="P/E" />
+		<mx:Label text="{this.stock.pe}" id="txtlblPe" />		
+		
+		<mx:Label text="Open"   />
+		<mx:Label text="{this.stock.open}" id="txtlblOpen" />
+		<mx:Label text="Div/yield" />
+		<mx:Label text="{this.stock.div_yield}" id="txtlblDiv" />	
+		
+		<mx:Label text="Vol / Avg."   />
+		<mx:Label text="{this.stock.volAvg}" id="txtVol" />
+		<mx:Label text="EPS" />
+		<mx:Label text="{this.stock.eps}" id="txtlblEPS" />			
+	</mx:Tile>
+	 
+</mx:Canvas>

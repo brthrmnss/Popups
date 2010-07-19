@@ -1,0 +1,245 @@
+<?xml version="1.0" ?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	 creationComplete="{this.onCreationComplete()}"
+  xmlns:ilog="http://www.ilog.com/2007/ilog/flex" 
+  height="600"
+      xmlns:smudge="com.mrinalwadhwa.effects.smudge.*" 
+    xmlns:rippleblocks="com.mrinalwadhwa.effects.rippleblocks.*" 
+    xmlns:colorquantization="com.mrinalwadhwa.effects.colorquantization.*" 
+    xmlns:tint="com.mrinalwadhwa.effects.tint.*"
+    xmlns:tvlines="com.mrinalwadhwa.effects.tvlines.*" 
+    xmlns:slice="com.mrinalwadhwa.effects.slice.*" xmlns:zoomblur="com.mrinalwadhwa.effects.zoomblur.*"
+    
+    
+    xmlns:local="*" xmlns:controls="com.brightPoint.controls.*">
+
+  <mx:Script>
+  <![CDATA[
+  	import mx.charts.series.CandlestickSeries;
+  	import utils.ParseCSV;
+  	import mx.rpc.events.FaultEvent;
+  	import mx.rpc.events.ResultEvent;
+  	import mx.rpc.http.HTTPService;
+  	import sss.Shelpers.Shelpers.other.TweenerHelpers;
+  	import mx.effects.easing.Exponential;
+  	import mx.effects.IEffect;
+  	import sss.Shelpers.Shelpers.FilterHelpers;
+  	import sss.Shelpers.Shelpers.ShelpersUI;
+    import mx.collections.ArrayCollection;
+    
+    [Bindable] public var  dp :  ArrayCollection =  new ArrayCollection();
+    
+    public function onCreationComplete() : void
+    {
+    	var httpS : HTTPService = new HTTPService()
+    	httpS.addEventListener(ResultEvent.RESULT, this.onGotIt ) 
+    	httpS.addEventListener(FaultEvent.FAULT, this.onFault )
+    	httpS.url = 'data.csv'
+    	httpS.send(  )
+    }
+    
+    public function onGotIt(e:Event):void
+    {
+    	 var dataSet : Object = e.target.lastResult;
+            //	dataIO.loadInAds( dataSet )
+        var r :  ArrayCollection = ParseCSV.parseCSV( dataSet.toString() )
+       this.dp.source = r.source.reverse()
+    	trace()
+    	
+    /* 	var series : CandlestickSeries = new CandlestickSeries() */
+                series.dataProvider= this.dp;
+/*                 series.openField="Open" 
+                series.highField="High" 
+                series.lowField="Low" 
+                series.closeField="Close" 
+                series.displayName="TICKER"
+    	this.chart.series = [ series ]  */
+		this.chart.dataProvider = this.dp
+    		var dp2_ : Object = [ this.dp, this.chart.dataProvider]
+     	
+    	//this.catAxis.dataProvider =this.dp
+    	this.hslicer.target = this.chart; 
+    	
+    	this.hslicer.addEventListener( 'Sliced Data', this.onSlicd )
+    		var dp_ : Object = [ this.dp, this.chart.dataProvider]
+    		
+    		
+    	//	this.myChart.dataProvider = this.dp; 
+     	return;
+    }
+    public function onFault(e:Event):void
+    {
+    	trace()
+    }
+        
+    [Bindable]
+    public var temperature:ArrayCollection = new ArrayCollection([
+      {Month:"January", London:39, Sydney:71.8, Beijing:23.7},
+      {Month:"February", London:39.6, Sydney:71.8, Beijing:28.8},
+      {Month:"March", London:42.3, Sydney:69.8, Beijing:40.5},
+      {Month:"April", London:47.3, Sydney:65.1, Beijing:56.5},
+      {Month:"May", London:53.4, Sydney:59.5, Beijing:68},
+      {Month:"June", London:59.4, Sydney:55.2, Beijing:75.9},
+      {Month:"July", London:62.6, Sydney:53.6, Beijing:78.8},
+      {Month:"August", London:61.9, Sydney:55.8, Beijing:76.5},
+      {Month:"September", London:57.6, Sydney:59.5, Beijing:67.6},
+      {Month:"October", London:50.5, Sydney:63.9, Beijing:54.7},
+      {Month:"November", London:43.9, Sydney:67.1, Beijing:39},
+      {Month:"December", London:40.6, Sydney:70.2, Beijing:27.3}]);
+ 
+ 	private function upComp() : void
+ 	{
+ 		trace();
+ 	}
+      
+     private function onSlicd(e:Event):void
+     {
+     	var dp_ : Object = [ this.dp, this.chart.dataProvider]
+     	//this.chart.dataProvider.refresh()
+     	//this.chart.invalidateData()
+     	this.series.dataProvider = this.chart.dataProvider
+     	//this.catAxis.dataProvider = this.chart.dataProvider
+     	//this.myChart.dataProvider = this.chart.dataProvider;
+     }
+     
+     public function labelNothing(...args ) :String
+     {
+     	return ''; 
+     }
+     
+        public function numLabelFunc(param1:Object, param2:Object, param3:Object) : String
+        {
+            return numFormat.format(Number(param1) / 1000000) + "M";
+        }// end function     
+     
+        public function currLabelFunc(param1:Object, param2:Object, param3:Object) : String
+        {
+            return currFormat.format(param1);
+        }// end function
+     
+     	public function filter() : void
+		{
+			
+		}
+  ]]>
+  </mx:Script>
+ 
+ 	<mx:NumberFormatter id="numFormat" useThousandsSeparator="true" />
+       <mx:CurrencyFormatter id="currFormat" />
+			<mx:Canvas clipContent="false" height="100%" id="bottomCanvas" styleName="podCanvas" width="100%">
+				
+
+				
+				
+				
+				<mx:VBox paddingTop="0" paddingLeft="0">
+	<!--							
+ <mx:AreaChart id="myChart"
+        showDataTips="true"
+        height="400"  width="400"
+     >
+        <mx:horizontalAxis>
+           <mx:CategoryAxis     categoryField="Date"    />
+        </mx:horizontalAxis>
+        <mx:verticalAxis>
+           <mx:LinearAxis    labelFunction="{labelNothing}"     />
+        </mx:verticalAxis>        
+        <mx:series>
+           <mx:AreaSeries   yField="Volume"  left="0"       displayName=""
+           />
+ 
+        </mx:series>
+     </mx:AreaChart>				
+				-->
+				
+					<mx:CandlestickChart id="chart"    paddingLeft="0" clipContent="false"
+						 showDataTips="false"
+						   height="400"  width="400" updateComplete="{upComp()}" >
+						         
+						         <mx:backgroundElements>
+						         	<mx:GridLines visible="false" />
+						         </mx:backgroundElements>
+						         
+						         	 <mx:annotationElements>
+							            <mx:CartesianDataCanvas id="volCanvas" includeInRanges="true" verticalAxis="{volAxis}"
+							            		  horizontalAxis="{this.catAxis}" />
+							            <mx:CartesianDataCanvas id="hlocCanvas" includeInRanges="true" verticalAxis="{hlocAxis}"
+							            		 horizontalAxis="{this.catAxis}"/>
+							        </mx:annotationElements>
+						         
+						            <mx:horizontalAxis>
+						                <mx:CategoryAxis id="catAxis"  categoryField="Date" title=""/>
+						            </mx:horizontalAxis>			
+						     
+            						<mx:verticalAxisRenderers>
+            							 <mx:AxisRenderer placement="left" id="leftAxis" showLine="false">
+            							 	<mx:axis>
+            							 		<mx:LinearAxis id="hlocAxis" title="Share Price ($)"  
+            							 			 baseAtZero="false" labelFunction="{currLabelFunc}"/>
+            							 	</mx:axis>
+            							 </mx:AxisRenderer>
+            							 <mx:AxisRenderer placement="right" id="rightAxis"  showLine="false">
+            							 	<mx:axis>
+            							 		<mx:LinearAxis id="volAxis" title="Volume (Millions)" 
+            							 			minimum="0"  labelFunction="{numLabelFunc}"/>
+            							 	</mx:axis>
+            							 </mx:AxisRenderer>  
+            						</mx:verticalAxisRenderers>
+            						
+						        <mx:series>
+
+			 <mx:AreaSeries id="areaSeries"   yField="Volume" alpha="0.3"  left="0"  verticalAxis="{this.volAxis}"   >
+			<!-- 	<mx:areaFill>
+			 		< areaSeries.setStyle("areaFill", param1);  return new AquaAreaFill();
+			 	</mx:areaFill>-->
+			 	<mx:areaStroke>
+			 		<mx:Stroke pixelHinting="true" weight="1" color="16777215" />
+			 	</mx:areaStroke>
+			 </mx:AreaSeries> 
+ 
+ 		  	<mx:CandlestickSeries 
+                    openField="Open" 
+                    highField="High" 
+                    lowField="Low" 
+                    closeField="Close"
+                     verticalAxis="{this.hlocAxis}"
+                     id="series"   >
+			<!-- 	<mx:areaFill>
+                return new AquaGhostFillReverse();
+            }// end function
+            , function (param1:IFill) : void
+            {
+                _GoogleFinance_CandlestickSeries1.setStyle("declineFill", param1);			
+			 		< areaSeries.setStyle("fill", param1);  return new AquaGhostFillReverse();
+			 	</mx:areaFill>-->                     
+ 		  		<mx:stroke>
+ 		  			<mx:Stroke pixelHinting="true" weight="1" color="16777215" />
+ 		  		</mx:stroke>
+ 		  	</mx:CandlestickSeries>
+ 
+ 
+            </mx:series>
+						            		
+						            <mx:horizontalAxisRenderers>
+                						<mx:AxisRenderer axis="{catAxis}" labelRotation="45"  canDropLabels="true"/>
+            						</mx:horizontalAxisRenderers>
+
+					</mx:CandlestickChart>		
+					<controls:ChartDataSlicer width="400" target="{chart}" id="hslicer" height="50" dataField="Close" labelField="Date"/>        
+				</mx:VBox>
+	<!--			<mx:VBox clipContent="false" height="100%" width="100%">
+					<mx:Canvas height="40" styleName="podHeader" width="100%">
+						<mx:VBox height="100%" left="10" right="10" top="8" verticalScrollPolicy="off">
+							<mx:Label fontSize="14" fontWeight="normal" id="stockLabel" styleName="titleLabel"/>
+						</mx:VBox>
+						<mx:HBox right="5">
+							<mx:RadioButton enabled="false" group="timePeriodGroup" id="_GoogleFinance_RadioButton1" label="Daily" value="daily"/>
+							<mx:RadioButton enabled="false" group="timePeriodGroup" id="_GoogleFinance_RadioButton2" label="Weekly" selected="true" value="weekly"/>
+						</mx:HBox>
+					</mx:Canvas>-->
+
+				<!--		  verticalAxisRenderers="[_GoogleFinance_AxisRenderer1_i(), _GoogleFinance_AxisRenderer2_i()]" width="100%"/>-->
+					<!--<mx:ChartDataSlicer dataField="4" height="60" id="hslicer" labelField="0" target="stockChart" width="100%"/>-->
+			</mx:Canvas>        
+        
+</mx:Canvas>

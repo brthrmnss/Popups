@@ -1,0 +1,464 @@
+<?xml version="1.0" ?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+		   creationComplete="{this.onCreationComplete()}" color="0xFFF000" backgroundColor="0"
+		   xmlns:local="*" xmlns:controls="com.brightPoint.controls.*" xmlns:fills="com.brightPoint.fills.*">
+	<mx:Metadata>
+		[Event(name="DataLoaded")]
+	</mx:Metadata>	
+	<mx:Script>
+		<![CDATA[
+			import com.brightPoint.fills.AquaAreaFill;
+			import com.brightPoint.fills.AquaGhostFillReverse;
+			
+			import mx.charts.HitData;
+			import mx.charts.chartClasses.CartesianCanvasValue;
+			import mx.charts.events.ChartItemEvent;
+			import mx.charts.series.CandlestickSeries;
+			import mx.charts.series.HLOCSeries;
+			import mx.charts.series.items.HLOCSeriesItem;
+			import mx.collections.ArrayCollection;
+			import mx.controls.DateField;
+			import mx.effects.IEffect;
+			import mx.effects.easing.Exponential;
+			import mx.events.FlexEvent;
+			import mx.formatters.DateFormatter;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.http.HTTPService;
+			
+			import sss.Shelpers.Shelpers.FilterHelpers;
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			import sss.Shelpers.Shelpers.other.TweenerHelpers;
+			
+			import utils.ParseCSV;
+			
+			[Bindable] public var  dp :  ArrayCollection =  new ArrayCollection();
+			
+			public function onCreationComplete() : void
+			{
+				var httpS : HTTPService = new HTTPService()
+				httpS.addEventListener(ResultEvent.RESULT, this.onGotIt ) 
+				httpS.addEventListener(FaultEvent.FAULT, this.onFault )
+				httpS.url = 'data.csv'
+				httpS.send(  )
+				
+				this.series.setStyle('itemRollOverColor', 0xFFF000 )
+				//this.series1.setStyle("declineFill", param1);			
+				//this.areaSeries.setStyle("fill",  AquaGhostFillReverse );
+				//this.areaSeries.setStyle("areaFill", new   AquaAreaFill );
+				this.rolloverTimer.addEventListener(TimerEvent.TIMER, this.checkForChange, false, 0 , true ) ; //
+			}
+			
+			public function onGotIt(e:Event):void
+			{
+				var dataSet : Object = e.target.lastResult;
+				//	dataIO.loadInAds( dataSet )
+				var r :  ArrayCollection = ParseCSV.parseCSV( dataSet.toString() )
+				//this.loadData(r.source.reverse())
+				this.dispatchEvent( new ChartPageEvent( ChartPageEvent.DataLoaded, r.source.reverse() )  ) 
+			}
+			
+			public function loadData(arr : Array )  : void
+			{ 
+		  
+				this.dp.source = arr;
+				for each ( var ite : Object in arr ) 
+				{
+					trace( ite.Volume +  ' ' + ite.Date ); 
+				}
+				/* 	var series : CandlestickSeries = new CandlestickSeries() */
+				//series.dataProvider= this.dp;
+				/*                 series.openField="Open" 
+				series.highField="High" 
+				series.lowField="Low" 
+				series.closeField="Close" 
+				series.displayName="TICKER"
+				this.chart.series = [ series ]  */
+				this.chart.dataProvider = this.dp
+				var dp2_ : Object = [ this.dp, this.chart.dataProvider]
+				
+				//this.catAxis.dataProvider =this.dp
+				this.hslicer.target = this.chart; 
+				
+				var dp_ : Object = [ this.dp, this.chart.dataProvider]
+				return;
+			}
+			public function onFault(e:Event):void
+			{
+				trace()
+			}
+  
+			public function numLabelFunc(param1:Object, param2:Object, param3:Object) : String
+			{
+				return numFormat.format(Number(param1) / 1000000) + "M";
+			}// end function     
+			
+			public function currLabelFunc(param1:Object, param2:Object, param3:Object) : String
+			{
+				return currFormat.format(param1);
+			}// end function
+			
+			public function getLblHorizontalDate(axis: AxisRenderer, currentLabel:  Object ) : String
+			{
+				//http://www.adobe.com/livedocs/flex/201/html/wwhelp/wwhimpl/common/html/wwhelp.htm?context=LiveDocs_Book_Parts&file=formatters_094_6.html
+				var d:Date = DateField.stringToDate(currentLabel.toString(),"YYYY-MM-DD");
+				var datesDisplay : int =  (axis.axis as Object).dataProvider.length
+				if ( datesDisplay > 356   )
+					var output : String = DateField.dateToString(   d, "YYYY");
+				else if  ( datesDisplay> 40 ) //Fri Dec 17
+				{
+					dateFormatter.formatString = "MMM'YY"
+					output = 	  this.dateFormatter.format( d ) 
+				}
+				else
+				{
+					dateFormatter.formatString = "EEE MMM DD"
+					output = 	  this.dateFormatter.format( d ) 			
+				}
+				return output;
+			}// end function	  
+			
+			private var dateFormatter : DateFormatter = new DateFormatter()
+			
+			public function filter() : void
+			{
+				
+			}
+			
+			
+			public function chart_onItemMouseMove(event: ChartItemEvent) : void
+			{
+				//trace( 'type ' +  event.hitData.chartItem + ' ' + event.hitData.chartItem  ) 
+				if (event.hitData.chartItem is   HLOCSeriesItem)
+				{
+					drawPriceHighlight(event.hitData);
+				}
+				else
+				{
+					drawVolHighlight(event.hitData);
+					
+				}
+				return;
+			}// end function	  
+			
+			
+			public function drawPriceHighlight(param1:HitData) : void
+			{
+/* 				 		  var _loc_2:* = hlocCanvas;
+				labelBox2.endEffectsStarted();
+				areaSeries.alpha = 0.3;
+				_loc_2.clear();
+				_loc_2.lineStyle(1, 16776960, 0.75, true, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.MITER, 2);
+				lowLabel.htmlText = "Low: <b>" + currFormat.format(param1.item[3]) + "</b>";
+				highLabel.htmlText = "High: <b>" + currFormat.format(param1.item[2]) + "</b>";
+				closeLabel.htmlText = "Close: <b>" + currFormat.format(param1.item[4]) + "</b>";
+				openLabel.htmlText = "Open: <b>" + currFormat.format(param1.item[1]) + "</b>";
+				dateLabel.text = param1.item[0];
+				openCloseBox.removeAllChildren();
+				if (param1.item[4] >= param1.item[1])
+				{
+				upArrow.width = 24;
+				closeLabel.setStyle("color", 65280);
+				downArrow.width = 0;
+				openLabel.setStyle("color", 16711680);
+				openCloseBox.addChild(closeLabel);
+				openCloseBox.addChild(openLabel);
+				}
+				else
+				{
+				upArrow.width = 0;
+				closeLabel.setStyle("color", 16711680);
+				downArrow.width = 24;
+				openLabel.setStyle("color", 65280);
+				openCloseBox.addChild(openLabel);
+				openCloseBox.addChild(closeLabel);
+				}
+				_loc_2.addDataChild(labelBox2, new CartesianCanvasValue(param1.item[0], param1.chartItem.itemRenderer.width + 4), new CartesianCanvasValue(param1.item[3], -50));
+				_loc_2.addDataChild(highLabel, chart.dataProvider.source[0][0], new CartesianCanvasValue(param1.item[2], -20));
+				_loc_2.addDataChild(lowLabel, chart.dataProvider.source[0][0], new CartesianCanvasValue(param1.item[3], 5));
+				_loc_2.moveTo(param1.item[0], param1.item[2]);
+				_loc_2.lineTo(chart.dataProvider.source[0][0], param1.item[2]);
+				_loc_2.moveTo(param1.item[0], param1.item[3]);
+				_loc_2.lineTo(chart.dataProvider.source[0][0], param1.item[3]);
+				return; */
+			}// end function	  
+			
+			public function drawVolHighlight(param1:HitData) : void
+			{
+/* 				 var _loc_2:CartesianDataCanvas = volCanvas;
+				labelBox.endEffectsStarted();
+				areaSeries.alpha = 1;
+				_loc_2.clear();
+				_loc_2.lineStyle(1, 16776960, 0.75, true, LineScaleMode.NORMAL, CapsStyle.ROUND, JointStyle.MITER, 2);
+				
+				
+				var yValue  :  Object =param1.item['Volume']
+				var xValue :  Object =  param1.item['Date']
+					
+				dataLabel.text = numFormat.format(yValue) + " shares traded on " +xValue;
+				_loc_2.addDataChild(labelBox, new CartesianCanvasValue(xValue  , -labelBox.width),
+							new CartesianCanvasValue(yValue, -10));
+				
+				var dbg : Array = [new CartesianCanvasValue(yValue , -labelBox.width),
+					new CartesianCanvasValue(xValue, -10)]
+				//_loc_2.moveTo(chart.dataProvider.source[(chart.dataProvider.source.length - 1)][0], param1.item[5]);
+				_loc_2.moveTo(chart.dataProvider.source[(chart.dataProvider.source.length - 1)]['Date'], yValue);
+				_loc_2.lineTo(xValue,yValue); 
+				
+				_loc_2.moveTo( xValue,yValue  );
+				_loc_2.lineTo(xValue, this.volAxis.maximum ); 				
+				
+				_loc_2.moveTo( xValue,yValue  );
+				_loc_2.lineTo(xValue,  0 ); 				
+				
+				
+				_loc_2.moveTo( xValue,yValue  );
+				_loc_2.lineTo(chart.dataProvider.source[0]['Date'], yValue ); 								
+				
+				return; */
+			}// end function
+			
+			
+			
+			private function chart_onRollOut() : void
+			{
+				volCanvas.removeAllChildren();
+				hlocCanvas.removeAllChildren();
+				volCanvas.clear();
+				hlocCanvas.clear();
+				return;
+			}// end function
+			
+			
+
+			protected function chart_rollOverHandler(event:MouseEvent):void
+			{
+				this.rolloverTimer.start()
+				
+			}
+
+
+
+			protected function checkForChange(event: TimerEvent):void
+			{
+				if ( 	lastX ==  this.chart.mouseY && lastY == this.chart.mouseY )
+				{
+					return;
+				}
+				//http://livedocs.adobe.com/flex/3/html/help.html?content=charts_eventsandeffects_03.html
+				lastX =  this.chart.mouseY
+				lastY = this.chart.mouseY
+				var p : Point = new   Point()
+				p = new Point(this.chart.mouseX,chart.mouseY);
+				var d:Array = chart.localToData(p);
+				p = chart.dataToLocal(d[0],d[1]);
+			trace(  Math.floor(p.x) + "," +  		Math.floor(p.y) + ' - ' + d[0]+ ' ' +  d[1] )
+				if ( d[0] == null || d[1] == null )
+				{
+					lastX = -1
+						return;
+				}
+				this.hlocCanvas2.removeAllChildren()
+		 	this.hlocCanvas2.addDataChild( this.marker, new CartesianCanvasValue( d[0]   , -this.marker.width/2),
+					new CartesianCanvasValue(getValueForDate( d[0])['Volume'] , -this.marker.width/2)); 
+			  
+				/* marker.x =  d[0] 
+				marker.y =  getValueForDate( d[0])['Volume']  */
+				this.dispatchEvent( new ChartPageEvent( ChartPageEvent.MOUSEOVER_CHART, [d[0],  d[1]] )  ) 				
+				
+			}
+			public var getValueForDate : Function; 
+			public var rolloverTimer : Timer = new Timer(100, 0 )
+			public var lastX : Number;
+			public var lastY : Number; 
+			protected function chart_rollOutHandler(event:MouseEvent):void
+			{
+				this.rolloverTimer.stop()
+				this.dispatchEvent( new ChartPageEvent( ChartPageEvent.MOUSEOUT_CHART )  ) 
+			}
+
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas id="marker" height="2" width="2" backgroundColor="0" />
+	<!--
+	<mx:Box addedEffect="Fade" 
+			 visible="false"
+			backgroundAlpha="0.3" backgroundColor="#000000" borderStyle="solid"  color="0xFFFFFF"
+			borderThickness="0" cornerRadius="3" filters="{[new GlowFilter(0, 0.7, 4, 4, 4, 9)]}"  includeInLayout="false"
+			height="18" id="labelBox"  removedEffect="Fade" verticalAlign="middle">
+		<mx:Label id="dataLabel"/>
+	</mx:Box>
+	
+	
+	
+	<mx:VBox visible="false" addedEffect="Fade" backgroundAlpha="0.3" backgroundColor="#00000000" borderStyle="solid"
+			 borderThickness="0" cornerRadius="3" filters="{[new GlowFilter(0, 0.7, 4, 4, 4, 9)]}" height="60"
+			 horizontalAlign="right" horizontalScrollPolicy="off" id="labelBox2" includeInLayout="false"
+			 paddingRight="10" removedEffect="Fade" verticalAlign="middle" verticalGap="0" verticalScrollPolicy="off" width="100">
+		<mx:Label id="dateLabel"/>
+		<mx:HBox height="100%" horizontalGap="0" verticalAlign="middle">
+			<mx:Image id="upArrow" />
+			<mx:Image id="downArrow"  />
+			<mx:VBox id="openCloseBox" verticalCenter="bottom" verticalGap="0" verticalScrollPolicy="off">
+				<mx:Label id="openLabel"/>
+				<mx:Label id="closeLabel"/>
+			</mx:VBox>
+			<mx:VBox verticalCenter="bottom" verticalGap="0"/>
+		</mx:HBox>
+	</mx:VBox>
+	<mx:Label filters="{[new GlowFilter(0, 0.7, 4, 4, 4, 9)]}" id="highLabel"/>
+	<mx:Label filters="{[new GlowFilter(0, 0.7, 4, 4, 4, 9)]}" id="lowLabel"/>
+		
+	-->
+	
+	
+	
+	<mx:Stroke id="series1Stroke"
+			   color="0xDAC03B"
+			   weight="1" />
+	<mx:Stroke id="series2Stroke"
+			   color="0x0913C8"
+			   weight="1" />
+	
+	<!--	<mx:LinearGradient id="series1Fill" angle="270">
+	<mx:entries>
+	<mx:GradientEntry color="0xDAC03B"
+	alpha=".7" />
+	<mx:GradientEntry color="0xF6E591"
+	alpha=".7" />
+	</mx:entries>
+	</mx:LinearGradient>
+	-->
+	<mx:LinearGradient id="series2Fill" angle="0">
+		<mx:entries>
+			<mx:GradientEntry color="0x600D0B"
+							  alpha="1" ratio="0" />
+			<mx:GradientEntry color="0x89130A"
+							  alpha="1"  ratio="1"  />
+		</mx:entries>
+	</mx:LinearGradient>	
+	
+	
+	<mx:NumberFormatter id="numFormat" useThousandsSeparator="true" />
+	<mx:CurrencyFormatter id="currFormat" />
+	<mx:Canvas clipContent="false"
+		
+			   height="100%" id="bottomCanvas"   width="100%">
+		
+		
+		
+		
+		
+		
+		<mx:CandlestickChart id="chart"    paddingLeft="0" clipContent="false"
+							 showDataTips="false" color="0"   
+							 rollOver="chart_rollOverHandler(event)"
+							  rollOut="chart_rollOutHandler(event)"
+							 itemRollOver="{chart_onItemMouseMove(event)}"
+							 itemRollOut="{chart_onRollOut()}"  
+							 height="400"  width="680"   >
+			<!-- 
+			<mx:backgroundElements>
+			<mx:GridLines visible="false" />
+			</mx:backgroundElements>
+			-->
+			<mx:annotationElements>
+				<mx:CartesianDataCanvas id="volCanvas" includeInRanges="true" verticalAxis="{volAxis}"
+										horizontalAxis="{this.catAxis}" />
+				<mx:CartesianDataCanvas id="hlocCanvas" includeInRanges="true" verticalAxis="{hlocAxis}"
+										horizontalAxis="{this.catAxis}">
+				</mx:CartesianDataCanvas>
+				<mx:CartesianDataCanvas id="hlocCanvas2"
+										includeInRanges="true" verticalAxis="{volAxis}"
+										horizontalAxis="{this.catAxis}">
+				
+				</mx:CartesianDataCanvas>				
+			</mx:annotationElements>
+			
+			<mx:horizontalAxis>
+				<mx:CategoryAxis id="catAxis"    categoryField="Date" title=""/>
+			</mx:horizontalAxis>			
+			
+			<mx:verticalAxisRenderers>
+				<mx:AxisRenderer   placement="left" id="leftAxis" showLine="false">
+					<mx:axis>
+						<mx:LinearAxis id="hlocAxis" title="Share Price ($)"  
+									   baseAtZero="false"   labelFunction="{currLabelFunc}"/>
+					</mx:axis>
+				</mx:AxisRenderer>
+				<mx:AxisRenderer placement="right" id="rightAxis" showLine="false">
+					<mx:axis>
+						<mx:LinearAxis id="volAxis" title="Volume (Millions)" 
+									   minimum="0"    labelFunction="{this.numLabelFunc}"/>
+					</mx:axis>
+				</mx:AxisRenderer>  
+			</mx:verticalAxisRenderers>
+			
+			<mx:series>
+			<!--	itemRenderer = "org.robotlegs.stockchart.view.CircleItemRenderer"  
+				radius="10"-->
+				<mx:AreaSeries id="areaSeries"   yField="Volume"   verticalAxis="{this.volAxis}"   >
+					<mx:areaStroke>
+						<mx:Stroke color="#600D0B"  alpha="1" scaleMode="normal" weight="1" />
+					</mx:areaStroke>
+					<mx:areaFill>
+						<mx:LinearGradient angle="90" >
+							<mx:entries>
+								<mx:GradientEntry color="#430303" alpha="0.8" />
+								<!--						 <mx:GradientEntry color="#005B79" alpha="0.8" />
+								<mx:GradientEntry color="#00475F" alpha="0.8" />
+								<mx:GradientEntry color="#003445" alpha="0.5" />
+								<mx:GradientEntry color="#002734" alpha="0.5" /> 
+								<mx:GradientEntry color="#00131A" alpha="1" ratio="0.9" />-->
+								<mx:GradientEntry color="#89130A" alpha="1"  />
+								<mx:GradientEntry color="#89130A" alpha="0.7"  />
+							</mx:entries>
+						</mx:LinearGradient>
+					</mx:areaFill>					 
+					<!-- 	<mx:areaFill>
+					< areaSeries.setStyle("areaFill", param1);  return new AquaAreaFill();
+					</mx:areaFill>-->
+					<!--	 	<mx:areaStroke>
+					<mx:Stroke pixelHinting="true" weight="1" color="16777215" />
+					</mx:areaStroke>-->
+				</mx:AreaSeries> 
+				
+				<mx:CandlestickSeries 
+					openField="Open" 
+					highField="High" 
+					lowField="Low" 
+					closeField="Close"
+					verticalAxis="{this.hlocAxis}"
+					
+					id="series"   >
+			 
+					<mx:fill>
+						<fills:AquaGhostFill />
+					</mx:fill>
+					<mx:declineFill>
+						<fills:AquaGhostFill />
+					</mx:declineFill>
+					<mx:stroke>
+						<mx:Stroke pixelHinting="true" weight="1" color="16777215" />
+					</mx:stroke>
+				</mx:CandlestickSeries>
+				
+				
+			</mx:series>
+			
+			<mx:horizontalAxisRenderers>
+				<mx:AxisRenderer axis="{catAxis}" labelRotation="0"   tickLength="0" showLine="false"
+								 
+								 labelFunction="{this.getLblHorizontalDate}"
+								 canDropLabels="true"/>
+			</mx:horizontalAxisRenderers>
+			
+		</mx:CandlestickChart>		
+		
+		
+		
+		<controls:ChartDataSlicer  y="410" width="680" target="{chart}" id="hslicer" height="50" dataField="Close" labelField="Date"/>        
+	</mx:Canvas>        
+	
+</mx:Canvas>

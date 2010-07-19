@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				xmlns:view="org.robotlegs.demos.helloflex.view.*"
+				xmlns:helloflex="org.robotlegs.demos.helloflex.*"
+				layout="absolute" creationComplete="{this.onCreationComplete()}"  initialize="{this.onInitialize()}"
+				width="1400" height="900"
+				backgroundColor="0xEBEFF0"  backgroundGradientColors="[0xEBEFF0,0xEBEFF0]"
+				currentState="" xmlns:stockchart="org.syncon.popups.stockchart.*"
+				xmlns:ui="org.robotlegs.stockchart.view.ui.*" xmlns:popups="org.syncon.popups.*" xmlns:view1="org.robotlegs.popups.view.*"
+> 
+	<!--<mx:Style source="assets/resume_pt2.css" />-->
+	<mx:Style source="assets/css/yflexskin2/eclosetocss.css" />
+
+	<mx:Script>
+		<![CDATA[
+			
+			
+			[Embed(source="/assets/css/yflexskin2/fonts3/AlteHaasGroteskRegular.ttf",
+			fontName="ArialEmbedded", fontStyle="normal")]
+			private var myNormalLucida:Class;
+			
+			private function onInitialize():void {
+				Font.registerFont(myNormalLucida)
+			}
+			
+			public function onCreationComplete() : void{
+				setTimeout( this.context.onInit,  3000 );
+				
+			}
+		]]>
+	</mx:Script>
+	<popups:PopupContext  id="context"  contextView="{this}" />
+<!--	<popups:PopupContext id="context"  contextView="{this}" />-->
+		<view1:PopupLauncher />
+</mx:Application>

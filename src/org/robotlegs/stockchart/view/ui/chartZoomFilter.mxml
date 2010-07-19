@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="{init()}"
+		 xmlns:view="org.robotlegs.demos.helloflex.view.*"    xmlns:ui="sss.Shelpers.Shelpers.ui.*"
+	 >
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			
+			import org.robotlegs.mvcs.support.CustomEvent;
+			import org.robotlegs.stockchart.view.CustomEvent2;
+			
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			
+			static  public var SelectFilter : String = 'selected_filter'
+			public function init()  : void
+			{
+				ShelpersUI.removeScrollbars( this )
+	 			var choices : Array = ['1d', '3d', '5d', 'YTD', '1y', '5y', '10y', 'Max']
+					var minute : Number = 1000*60
+					var hour : Number = minute*60
+					var day : Number = 24*hour; 
+					var year : Number = 365*day
+				var durations : Array = [day, 3*day, 5*day,  -1 , year, 5*year, 10*year, 0]
+				for   ( var i : int = 0; i < choices.length; i++ ) 
+					{
+						var choice : String = choices[i]
+						var lbl : Label = new Label()
+						lbl.mouseChildren = false; 
+						lbl.setStyle('color', 0x0000CC )
+						lbl.setStyle('textDecoration', 'underline' ) 
+						lbl.buttonMode = true
+						lbl.useHandCursor = true;
+							lbl.text = choice; 
+						lbl.data = durations[i]
+							//trace( lbl.data + ' ' + durations[i] )
+						lbl.addEventListener(MouseEvent.CLICK, this.onClickLbl , false, 0, true ) 
+						this.hboxHolder.addChild( lbl )
+					}
+			}			
+	 
+
+			protected function onClickLbl(event:MouseEvent):void
+			{
+				var lbl : Label = event.currentTarget as Label
+				this.dispatchEvent( new CustomEvent2( SelectFilter, lbl.data )  )
+			}
+
+		]]>
+	</mx:Script>
+	
+	
+	
+<mx:HBox id="hboxHolder" horizontalGap="-2">
+	<mx:Label text="Zoom:"  fontWeight="bold" />
+</mx:HBox>
+
+	
+</mx:Canvas>

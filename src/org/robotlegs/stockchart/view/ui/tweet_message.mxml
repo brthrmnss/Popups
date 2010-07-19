@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="{init()}"
+		 xmlns:view="org.robotlegs.demos.helloflex.view.*"    width="300" backgroundColor="0xFFFFFF"
+		 xmlns:ui="sss.Shelpers.Shelpers.ui.*" xmlns:Utils="sss2.Onenote.Utils.*"
+	  height="147">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.ListEvent;
+			
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			
+			[Bindable]public var tabsDp: ArrayCollection = new ArrayCollection();			
+			
+			public function init()  : void
+			{
+				ShelpersUI.removeScrollbars( this )
+		 
+			}		
+			
+			
+			/**
+			 * Invoked by the tab list, when a tab is clicked, 
+			 * brings it to the front. 
+			 * */
+			public function onClick( e:ListEvent ): void
+			{
+				var render:ticker_list_itemrenderer = e.itemRenderer as ticker_list_itemrenderer
+			}
+			
+			/**
+			 * Called when user rolls over  a tab
+			 * */
+			public function onRollOver( e:ListEvent ): void
+			{
+				var render:ticker_list_itemrenderer = e.itemRenderer as ticker_list_itemrenderer
+			//	render.showEdit()
+			}
+			
+			/**
+			 * Called when user rolls out of  a tab
+			 * */
+			public function onRollOut( e: ListEvent ): void
+			{
+				var render:ticker_list_itemrenderer = e.itemRenderer as ticker_list_itemrenderer
+			//	if ( render.layout.selected == false ) render.showEdit(false)
+			}         			
+			
+			public function loadData(arr : Array )  : void
+			{ 
+				this.tabsDp.source = arr; 
+				this.tabsDp.refresh()
+					
+				//this.tabHorizontalList.onResize( null )
+			}			
+	
+			public function onChangeMessage()  : void
+			{
+				var charRemainingCount : int = 140 - txt.text.length
+				this.charsRemaining.text = (charRemainingCount).toString() + ' Characters Left'
+			}
+		]]>
+	</mx:Script>
+	 
+	
+	<mx:Label text="Have your say..." fontSize="21" fontWeight="normal"  x="15" y="14"   color="0x373737" />
+	<mx:Label id="charsRemaining"  fontSize="21" fontWeight="bold"  
+			  textAlign="right"  text="140"  right="15" y="14" color="0xC6CACD" />
+	<mx:TextArea x="15"  y="50" width="270" height="45" borderColor="0xAAAAAA"  cornerRadius="5"
+				  change="{this.onChangeMessage()}"
+				 
+				 />
+	<mx:Text id="txt" width="250"  height="30" y="105"  x="15"/>
+	<mx:Canvas  backgroundColor="0xAAAAAA"   borderStyle="solid" cornerRadius="4" y="105" right="15">
+		<mx:LinkButton 
+			
+			label="Tweet"   width="60" fontWeight="normal"  color="0xFFFFFF"/>
+	</mx:Canvas>
+</mx:Canvas>

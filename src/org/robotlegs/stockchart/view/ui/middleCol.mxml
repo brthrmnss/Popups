@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="{init()}"
+		 
+		 xmlns:ui="org.robotlegs.stockchart.view.ui.*" xmlns:view="org.robotlegs.stockchart.view.*"
+	 >
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			
+			import sss.Shelpers.Shelpers.ListHelpers;
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			import sss.Shelpers.vos.Indexxer;
+			
+			import sss2.JrlV4.vos.CategoryVO;
+			[Bindable] public var dp  :  Indexxer = new Indexxer() 			
+			
+			public function init()  : void
+			{
+				ShelpersUI.removeScrollbars( this )
+				//ShelpersUI.removePadding( this.lister )
+ 
+			}			
+ 		
+						
+		]]>
+	</mx:Script>
+	
+	<!--<mx:Canvas y="135" width="700" x="0">-->
+	<mx:Canvas y="70" width="700" x="0">
+	<ui:stockHeadsUp id="headsUp"  width="100%"/>
+	<ui:marketIndex id="markeIndex" y="20"  width="100%"/>
+	<mx:Canvas y="115" width="680" x="10">
+		<mx:Canvas backgroundColor="0xCCCCCC" height="1" width="100%" />
+		
+		<ui:chartZoomFilter id="zoomFilter" fontSize="10"  />		
+		<ui:chartDateFilter id="dateFilter" right="0" />
+	</mx:Canvas>
+
+	</mx:Canvas>
+	
+		<ui:searchbar id="search" top="20" right="10" />
+	<!--	<mx:Label text="touching pig" />-->
+<!--	<view:ChartPage id="charter"  y="280"  x="10" width="680" />-->
+	
+	
+	<view:ChartPage id="charter"  y="230"  x="10" width="680" />
+<!--	<ui:finance_chart id="charter"  y="280"  x="10" width="680" />-->
+	<!--
+	<ui:chart1 id="charter"  y="270"  x="10" width="680" />
+	-->
+	<!--	<ui:ticker bottom="75" width="680" x="10" />-->
+		<ui:footer id="footer_" bottom="10"  x="10"  width="680" />
+<!--
+<mx:Canvas backgroundColor="#8A8C8E" height="100%" width="1" right="0" />
+	-->
+</mx:Canvas>

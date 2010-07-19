@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	 horizontalScrollPolicy="off" verticalScrollPolicy="off" 
+	 creationComplete="init()" height="40" width="280"
+	xmlns:code="http://code.google.com/p/flexlib/" xmlns:controls="qs.controls.*" xmlns:ui="sss.Shelpers.Shelpers.ui.*" xmlns:Utils="sss2.Ecloseto.Utils.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import sss.Shelpers.Shelpers.FilterHelpers;
+			import sss.Shelpers.Shelpers.Shelpers;
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			import sss.Shelpers.Shelpers.other.TweenerHelpers;
+			
+			import sss2.JrlV4.vos.CategoryVO;
+		 
+			
+			//[Bindable] public var eclosetoModel :   EclosetoModel = EclosetoModel.getInstance();		
+			 public var    section :   CategoryVO = new CategoryVO		
+			override public function set data(value:Object):void
+			{
+				if(value != null)
+				{
+					super.data = value;
+ 
+					this.section = value as CategoryVO
+					if ( this.creationComplete == false )
+						return;
+
+					this.modifyF() 
+ 		 	
+				}
+			}
+ 
+ 		
+		//[Bindable] public var model : JrlV4Model = JrlV4Model.getInstance();		
+ 
+			public function init() :void
+			{
+				this.creationComplete = true
+				ShelpersUI.removeScrollbars( this )
+				this.modifyF()
+				//this.lblText.width = this.width- 20
+				
+			
+				this.parentDocument.addEventListener('Reset', this.onReset ) 
+ 
+			}
+			public var creationComplete : Boolean = false; 
+  
+  		public function onReset( e : Event )  : void
+  		{
+  			this.onRollOut()
+  			//this.unSelect(false)
+  		}
+  		
+  
+		public function onRollOver() : void
+		{
+			/* TweenerHelpers.removeTweens( this.btnClose ) 
+			TweenerHelpers.FadeIn( this.btnClose ) 
+			Shelpers.traceS('rolling over');		 */	
+		}
+		
+		public function onRollOut() : void
+		{
+			/* TweenerHelpers.removeTweens( this.btnClose ) 
+			TweenerHelpers.FadeOut_Safe( this.btnClose ) 
+			Shelpers.traceS('rolling out'); */
+		}			
+		public function onSelected() : void
+		{
+			
+/* 			this.bg.setStyle( 'style', 'selected' ) 
+			this.lblText.setStyle('verticalCenter', 1 )
+						this.lblText.setStyle('fontWeight', 'bold' ) 
+			this.lblText.setStyle('fontSize', '14' ) 				
+			this.section.selected = true	 */	
+		}				
+		public function unSelect() : void
+		{
+			
+			
+/* 			this.lblText.setStyle('verticalCenter', 3 )
+			this.lblText.setStyle('fontWeight', 'normal' ) 
+			this.lblText.setStyle('fontSize', '12' ) 
+			this.bg.setStyle( 'style', '' ) 
+			this.section.selected = false */
+			//this.callLater( this.unSelect ) 
+		}			
+		public var inited : Boolean = false; 
+		public function modifyF()  : void
+		{
+ 
+ 
+				this.onRollOut()
+/* 		if ( this.section.data1.length == 6 ) 
+		 	this.bg.setStyle('backgroundColor',   '#'+this.section.data1)
+		 else
+		 	this.bg.setStyle('backgroundColor',   uint( this.section.data1) )	 */	 	
+	/* 	if ( this.section.value != 0 ) //.length == 6 ) 
+		 	this.bg.setStyle('backgroundColor',   uint( this.section.value ) )	 */			 	
+			//this.lblText.text = this.section.name
+				this.bg.setStyle('backgroundColor',   this.section.data1)
+			var index : int = this.parentDocument.dp.getItemIndex( this.section )
+				var odd : Boolean =( index % 2 == 0 )
+				this.bg.setStyle('bgIndexOdd', odd )
+		}
+		public var color : uint
+ 		public function onDelete() : void
+ 		{
+ 			this.parentDocument.removeColor( this.section ) ; // rewkljwljreremevomer.,.vomer.c.siht (
+ 		}
+		]]>
+	</mx:Script>
+ 
+		<mx:Canvas id="bg"  styleName="newsItemRendererBg" width="100%" height="100%"/>
+	
+ 	 <mx:Label id="txtLbl" text="5/7/2009"  color="0x666666"  x="15" y="5"/>
+	
+	<mx:Label id="asd" text="News Article" color="0x538BDC"  x="80" y="5"/>
+	<mx:Label id="desc" text="Descroption"  fontSize="10" color="0x808080" x="80" y="22"/>
+</mx:Canvas>

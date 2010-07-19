@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"  creationComplete="{init()}"
+		 xmlns:view="org.robotlegs.demos.helloflex.view.*"    xmlns:ui="sss.Shelpers.Shelpers.ui.*" xmlns:ui1="org.robotlegs.stockchart.view.ui.*"
+	 >
+
+	<mx:Script>
+		<![CDATA[
+			import sss.Shelpers.Shelpers.ShelpersUI;
+			import sss.Shelpers.Shelpers.other.TweenerHelpers;
+			public function init()  : void
+			{
+				ShelpersUI.removeScrollbars( this )
+			}			
+			private var _setup : Boolean = false; 
+			public function loadData(arr : Array )  : void
+			{ 
+				/* this.list1.loadData(arr)
+				this.list2.loadData(arr) */
+				//if ( _setup  == false )  
+				this.callLater(	setup )
+				
+			}
+			public var time : Number = 20
+			public var listWidth : Number = 0; 
+			public function setup()  : void
+			{
+				_setup = true; 
+				this.listWidth = this.list1.width; 
+				TweenerHelpers.removeTweens( this.list1 ) 
+				TweenerHelpers.removeTweens( this.list2 ) 
+				this.list1.x = 0 
+				this.list2.x = this.listWidth
+				TweenerHelpers.TweenProp(this.list1, 'x', -listWidth, time/2,0, doneTween, [this.list1] ,  'linear'   )  
+				TweenerHelpers.TweenProp( this.list2, 'x',  -listWidth, time,0, doneTween,[this.list2] ,  'linear'   )  
+			}
+			
+			public function doneTween(list:Object )  : void
+			{
+				list.x = listWidth
+				TweenerHelpers.TweenProp(  list, 'x',  -listWidth, time,0, doneTween,[ list] ,  'linear'   )  
+			}
+			
+		]]>
+	</mx:Script>
+	
+<!-- 
+	<mx:Button id="ticker_" styleName="tickerBg" />
+	-->
+ <!--
+	<ui1:ticker_list id="list1" y="2" />
+	<ui1:ticker_list id="list2"  y="2" />
+	
+		-->
+	<mx:Button id="list1" styleName="tickerBg" />
+	<mx:Button id="list2" styleName="tickerBg" />
+	<mx:Canvas backgroundColor="0xFFFFFF"  verticalCenter="0" right="0">
+		<mx:LinkButton label="settings" fontWeight="normal" x="5"  />
+	</mx:Canvas>	
+	
+</mx:Canvas>

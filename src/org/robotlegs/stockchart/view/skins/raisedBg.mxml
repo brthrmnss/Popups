@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<degrafa:GraphicRectangularBorderSkin xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="400" height="300"  
+	 xmlns:degrafa="http://www.degrafa.com/2007" xmlns:geometry="com.degrafa.geometry.*">
+
+    <mx:Script>
+        <![CDATA[
+            import mx.core.EdgeMetrics;
+			///import com.degrafa.core.utils.ColorUtil
+			import mx.utils.ColorUtil; 
+            [Bindable]
+            private var _skinWidth : Number = 0;
+
+            [Bindable]
+            private var _skinHeight : Number = 0;
+			
+            private var edges : EdgeMetrics = new EdgeMetrics(0,  0, 0,  0);
+            override protected function updateDisplayList(unscaledWidth : Number, unscaledHeight : Number) : void
+            {
+				
+                _skinWidth = unscaledWidth;
+                _skinHeight = unscaledHeight;
+                super.updateDisplayList(unscaledWidth, unscaledHeight);                
+            }
+
+			override public function styleChanged(styleProp:String):void {
+				super.styleChanged(styleProp);
+				if (styleProp=="bgColor") 
+				{
+					if ( this.getStyle( 'bgColor' ) != this.color.color )
+						this.color.color =  this.getStyle('bgColor'); 					
+					invalidateDisplayList();
+					return;
+				}
+				if ( color.alpha == 0 ) color.alpha = 1; 
+			}
+			
+			
+            override public function get borderMetrics() : EdgeMetrics
+            {
+                return edges;
+            }
+		
+        ]]>
+    </mx:Script>
+
+	<degrafa:fills>
+		<degrafa:SolidFill  id="color" alpha="0" />    
+	</degrafa:fills>	
+ 
+	<degrafa:strokes>
+		<degrafa:SolidStroke color="0xFFFFFF" id="whiteStroke" />
+		<degrafa:SolidStroke color="0x055283" id="outsideStroke" alpha="0.6" />
+	</degrafa:strokes>
+    <degrafa:geometry>
+ <!--
+		<degrafa:RegularRectangle x="0" y="0" width="{this.width}"  height="1" stroke="{this.outsideStroke}" />
+	<degrafa:RegularRectangle x="0" y="1" width="{this.width}"  height="1" stroke="{this.whiteStroke}" />
+		
+		
+	<degrafa:RegularRectangle x="0"  y="{this.height-2}" width="{this.width}"   height="1" stroke="{this.whiteStroke}" />
+		<degrafa:RegularRectangle x="0" y="{this.height-1}" width="{this.width}"  height="1" stroke="{this.outsideStroke}" />
+		-->
+		<!-- This fill must be here or else the skin will not stretch ... always better to use rectangles-->
+ 	<geometry:RegularRectangle  id="headerBg"   fill="{this.color}"  y="-25"
+									width="{this._skinWidth}" height="{this._skinHeight+25}" 
+								    >
+ 
+		
+	</geometry:RegularRectangle>
+    </degrafa:geometry>
+ 
+ 
+		<degrafa:filters>
+			<mx:DropShadowFilter alpha="0.3" angle="65" distance="5" blurX="5" />  
+		</degrafa:filters>
+</degrafa:GraphicRectangularBorderSkin>

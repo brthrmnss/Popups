@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<other:DraggablePanel xmlns:mx="http://www.adobe.com/2006/mxml" 
+   creationComplete="init()"
+    backgroundColor="0xFFFFFF"
+     borderStyle="solid"
+       maxHeight="700"
+          maxWidth="1050"
+  paddingTop="20"
+xmlns:other="sss.Shelpers.Shelpers.other.*">
+ <!-- 
+ can it be moveable? 
+ -->
+  <mx:Script>
+    <![CDATA[
+    	import sss.settings.LanguageSettings;
+    	import sss.Shelpers.Shelpers.Shelpers;
+    	import caurina.transitions.Tweener;
+    	import sss.Shelpers.Shelpers.ShelpersPopups;
+    	import mx.events.ResizeEvent;
+    	import mx.core.UIComponent;
+    	import sss.Shelpers.Shelpers.ShelpersForms;
+    	import sss.Shelpers.Shelpers.ShelpersUI;
+      import mx.managers.PopUpManager;
+      public var inUse:Boolean = false;
+      
+    
+      public function init() : void
+      {
+    //  	PopUpManager.centerPopUp(this);
+      var localPa : Object = 	this.parentApplication
+      var localPar : UIComponent = 	this.parentDocument     as UIComponent 
+	
+	
+		if ( moveToObject == null )	
+			localPar.addEventListener(ResizeEvent.RESIZE, this.onParentAppResize, false, 0 , true ) 
+		
+		
+		
+		if ( this.addThsiChild != null )
+			this.vbo.addChildAt( this.addThsiChild, 0 ) 
+		
+		
+	
+		 var werwe : ShelpersPopups
+		 if ( dontCenter == false  ) 
+		 {
+		 	ShelpersPopups.Center( this )
+		 	moveFx()
+		 }	
+	ShelpersUI.pad( this )
+	ShelpersUI.removeScrollbars( this )
+      }
+      
+      public var stickToParent :  Object; // what to move too
+      public var stickToParentPlacement : String = 'center'
+      public var addThsiChild : DisplayObject
+      public var moveToObject : Object; //
+      
+      public var dontCenter : Boolean = false
+      
+      public function onParentAppResize (e : Event )  : void
+      {
+      	moveFx()	
+      }
+      
+      [Bindable] public var allowClose : Boolean = true; 
+      public function closeMe():void
+      {
+      	if ( this.allowClose == false ) return; 
+        inUse = false;
+        if ( this.customCloseFx != null )
+        {
+        	this.customCloseFx()
+        	return; 
+        }
+        this.vbo.removeAllChildren()
+        PopUpManager.removePopUp(this);
+      }
+
+     public var customCloseFx : Function
+     
+     static public function createWithForm(	uicomponent : Object, app:Object, ttle : String,  closeFx : Function = null)  :    ShelperPopup
+		{
+	 			var ege : ShelperPopup = ShelpersPopups.addPopup2(uicomponent as UIComponent,  app ,  false , null, 'center' );
+	 				ege.customCloseFx = closeFx;
+	 				if ( closeFx  == null ) 
+	 					ege.customCloseFx = ege.defaultHideMe
+	 			ege.visible = false;
+	 			ege.showing = false ; 
+	 			ege.title = ttle
+	 			ege.stickToParentPlacement = 'center'
+	 			//
+	 		 //()
+	 			
+	 			return ege			
+		} 
+     
+     public function centerMe()  : void
+     {
+     	ShelpersPopups.Center( this )
+     }
+     
+     public var showing : Boolean = true
+			public function defaultHideMe(tweenAlpha : Boolean = true)  : void
+			{
+				this.showing = false
+	 			Tweener.removeTweens( this )
+	 			if ( tweenAlpha ) 
+	 				ShelpersPopups.fadeOutAndClose( this, false )
+	 										
+			}	     
+     
+     public function defaultShow(tweenAlpha : Boolean = true, recenter : Boolean = true, toggle : Boolean = true  ) : void
+     {
+     	if ( toggle ) 
+     	{
+     		if ( this.showing ) 
+     		{
+     			this.defaultHideMe()
+     			return; 
+     		}
+     	}
+     	this.showing = true
+	 			Tweener.removeTweens( this )
+	 			
+	 			if ( this.visible == false ) 
+	 				this.visible = true; 
+	 				
+	 				
+	 			if ( this.alpha < 1 ) 
+	 				ShelpersUI.FadeIn( this )		 
+	 			
+	 			
+	 			if ( recenter == true )	
+	 				this.reCenter()    	
+     }
+     
+     public function reCenter()  : void
+     {
+     	this.moveFx()
+     }
+     
+     	static public function showIfImAMe( e :  Object)  :  void
+     	{
+     		if ( e is ShelperPopup == false || e == null )
+     		{
+     			trace('wtf')
+     			return
+     		}
+     	 	Tweener.removeTweens( e )
+ 			
+ 			if ( e.visible == false ) 
+ 				e.visible = true; 
+ 			if ( e.alpha < 1 ) 
+ 				ShelpersUI.FadeIn( e )
+ 			
+ 			var ee :  ShelpersUI
+     		
+     	}
+     //public var name : String  = ''
+     public function moveFx() : void
+     {
+     	//move this tow ehre ti bleongs .... 
+     	//check if it bigger than the screen ...
+     	// PopUpManager.centerPopUp(this);
+     var asd : Shelpers
+     	//Shelpers.traceS('name', this.name, this.stickToParentPlacement)
+     	if (  this.stickToParentPlacement == 'center' ) 
+     	{ 
+     		ShelpersPopups.Center( this )
+     		if ( this.parent == null ) 
+     		{
+     			Shelpers.traceS('what happened')
+     			return;
+     		}
+     		this.x = this.parent.width - 10 - this.width
+     		return; 
+     	}
+     	if ( this.moveToObject != null )  //this  clean  up 
+     	{
+     		 globalParent  = this.moveToObject.localToGlobal(new Point( 0, 0 )  )
+				  pt   = new Point( ) 
+				pt.x = globalParent.x + this.moveToObject.width
+				pt.y = globalParent.y  // - this.height ///no no nono no
+				//my top left corner, is at your top right corner
+				
+				
+				var pt2 : Point = this.globalToLocal( pt )
+				this.x = pt2.x
+				this.y = pt2.y      
+				return //		
+     	}
+     	if ( this.stickToParent == null ) return;
+     	var globalParent : Point = this.stickToParent.localToGlobal(new Point( 0, 0 )  )
+     		if (  this.stickToParentPlacement == 'LL' || this.stickToParentPlacement == '' )
+			{
+				var pt : Point = new Point( ) 
+				pt.x = globalParent.x + this.stickToParent.width
+				pt.y = globalParent.y  // - this.height ///no no nono no
+				//my top left corner, is at your top right corner
+				
+				
+				  pt2     = this.globalToLocal( pt )
+				this.x = pt2.x
+				this.y = pt2.y 
+			}
+			
+     		if (  this.stickToParentPlacement == ShelpersPopups.PlacementTopRight )
+			{
+				
+				this.x = globalParent.x - this.width
+			//	this.y = globalParent.y - this.height
+			}			
+			
+     }
+    
+     public function centerOnComponent(e:UIComponent) : void
+     {
+ 
+      
+     		ShelpersPopups.Center( this )
+     //		this.x = this.parent.width - 10 - this.width
+      
+     	 //yeah this function isn't done  yet
+			
+     }
+        
+    
+    
+    public function addContent ( e : UIComponent )  : void
+    {
+    	this.vbo.addChild( e )
+    }
+    [Bindable] public var message : String = '';
+ //	[Bindable] public var close : String = ''; 
+ 	  private var ee :  LanguageSettings
+    ]]>
+  </mx:Script>
+  
+  	 
+  <!-- 	<mx:Button label="X"   click="{this.closeMe()}" right="10"/> -->
+  	 <!--
+  	 <mx:Button label="{this.model.lang.close}" bottom="0" horizontalCenter="0" click="{this.closeMe()}" visible="{allowClose}"/>
+  	 -->
+    <mx:VBox id="vbo"   y="40" paddingBottom="40"      paddingTop="40"        maxHeight="700"
+          maxWidth="1050"/>
+  
+ 
+ 	 <mx:Button label="{LanguageSettings.closePopup}" 
+ 	 	 id="btnButton"
+ 	 	bottom="0" horizontalCenter="0" 
+ 	 	click="{this.closeMe()}" visible="{allowClose}"/>
+ 	 
+</other:DraggablePanel>
