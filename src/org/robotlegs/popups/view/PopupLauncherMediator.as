@@ -9,8 +9,8 @@ package org.robotlegs.popups.view
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.popups.controller.HidePopupEvent;
 	import org.syncon.popups.controller.ShowPopupEvent;
-	import org.robotlegs.popups.controller.default_commands.ShowAlertMessageTriggerEvent;
-	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
+	import org.syncon.popups.controller.default_commands.ShowAlertMessageTriggerEvent;
+	import org.syncon.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
 	
 	public class PopupLauncherMediator extends Mediator
 	{

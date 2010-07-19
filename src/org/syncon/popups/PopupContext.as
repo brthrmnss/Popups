@@ -1,35 +1,25 @@
 package org.syncon.popups
 {
-	import flash.events.Event;
-	import flash.events.TimerEvent;
-	import flash.utils.Timer;
-	
 	import org.robotlegs.core.ICommandMap;
 	import org.robotlegs.core.IContext;
-	import org.robotlegs.core.IInjector;
+	import org.robotlegs.core.IInjector; 
 	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.mvcs.Context;
-	import org.syncon.popups.controller.*;
-	import org.robotlegs.popups.controller.default_commands.ShowAlertMessageCommand;
-	import org.robotlegs.popups.controller.default_commands.ShowAlertMessageTriggerEvent;
-	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogCommand;
-	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
-	import org.syncon.popups.model.*;
-	import org.robotlegs.popups.view.*;
+	import org.robotlegs.popups.view.PopupLauncher;
+	import org.robotlegs.popups.view.PopupLauncherMediator;
 	import org.robotlegs.popups.view.popups.*;
-	import org.robotlegs.popups.view.popups.default_popups.*;
-	import org.robotlegs.stockchart.controller.*;
-	import org.robotlegs.stockchart.model.*;
-	import org.robotlegs.stockchart.services.*;
-	import org.robotlegs.stockchart.view.*;
-	import org.robotlegs.stockchart.view.ui.*;
+	import org.syncon.popups.controller.*;
+	import org.syncon.popups.controller.default_commands.*;
+	import org.syncon.popups.model.*;
+	import org.syncon.popups.view.popups.*;
+	import org.syncon.popups.view.popups.default_popups.*;
 	
 	public class PopupContext extends   Context
 	{
 		
 		public function PopupContext()
 		{
-			super();
+			super(); 
 		}
 		
 		public function subLoad( this_ :  IContext,  injector_ :  IInjector, commpandMap_ :  ICommandMap, mediatorMap_ :  IMediatorMap ) : void

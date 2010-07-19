@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()" verticalGap="-1"
     verticalScrollPolicy="off" horizontalScrollPolicy="off"   styleName="popupSkin"
-	implements="org.syncon.popups.views.IPopup"	
+	implements="org.syncon.popups.view.IPopup"	
     xmlns:ui="sss.Shelpers.Shelpers.ui.*" xmlns:Utils="sss2.Twit.Utils.*">
     <mx:states>
         <mx:State name="small">
@@ -173,11 +173,11 @@
 	    
 	    <mx:Label id="titleTxt" text="{this.tTitle}" fontSize="14" />
 	    
-	    <mx:TextArea
+	    <mx:TextArea selectable="false" focusAlpha="0"
 			 borderStyle="none" backgroundAlpha="0.0"
 			id="txtTxt" fontSize="12" updateComplete="{this.onChangeText()}" condenseWhite="true"
 	        color="0" fontWeight="bold"  width="600" height="356"   />
 	    <mx:HBox horizontalAlign="center" width="100%">
-	        <mx:Button label="Ok" styleName="goButton" click="close()" id="btnOk" bottom="0" />
+	        <mx:Button label="OK" styleName="goButton" click="close()" id="btnOk" bottom="0" />
 	    </mx:HBox>
 </mx:VBox>

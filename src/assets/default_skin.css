@@ -1,11 +1,4 @@
-  
-            .popupSkin
-            {
-            	/*
-            	border-skin: ClassReference( "org.robotlegs.popups.view.skins.popupSkin" );
-            	*/
-            	border-skin: ClassReference( "org.robotlegs.popups.view.skins.DefaultPopupSkin" );
-            }                  
+            
      
   @font-face {
     src: local("Arial");
@@ -45,11 +38,4 @@ Application {
     font-family: ArialEmbedded;
 }
 
-
-.closeBtn {
-upSkin: Embed(source="close.png");
-downSkin: Embed(source="close.png");
-overSkin: Embed(source="close.png");
-disabledSkin: Embed(source="close.png");
-}
  

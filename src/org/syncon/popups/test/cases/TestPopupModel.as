@@ -17,7 +17,7 @@ package org.syncon.popups.test.cases
 	import org.syncon.popups.controller.ShowPopupCommand;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	import org.syncon.popups.model.PopupModel;
-	import org.syncon.popups.views.IPopup;
+	import org.syncon.popups.view.IPopup;
 	import org.robotlegs.popups.view.popups.popup1;
 	import org.robotlegs.popups.view.popups.test_popup;
 	import org.swiftsuspenders.Injector;

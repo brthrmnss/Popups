@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"
-		 backgroundColor="0" backgroundAlpha="0.4" implements="org.syncon.popups.views.IPopup" >
+		 backgroundColor="0" backgroundAlpha="0.4" implements="org.syncon.popups.view.IPopup" >
     <mx:Script>
         <![CDATA[
 			import mx.core.UIComponent;

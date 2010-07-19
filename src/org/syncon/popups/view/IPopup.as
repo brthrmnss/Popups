@@ -1,15 +1,16 @@
-
-package  org.syncon.popups.views
+package  org.syncon.popups.view
 {
 	import sss.Shelpers.Shelpers.ui.PopupCode;
 	
+	/**
+	 * Defines basic interface for popups 
+	 * @author m3skm00
+	 * 
+	 */
 	public interface IPopup
 	{
 		function create(app:Object ): IPopup
-			/**
-			 * Provides access to popupCode utility class
-			 * Contains functions tomake managing popups eaiser
-			 * */
+
 		function get  popupCode ():PopupCode;
 		function set  popupCode ( _popupCode :PopupCode ) : void ;		
 /*		

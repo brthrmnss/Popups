@@ -16,7 +16,7 @@ package org.syncon.popups.model
 	import org.robotlegs.mvcs.Actor;
 	import org.syncon.popups.controller.CreatePopupCommand;
 	import org.syncon.popups.controller.CreatePopupEvent;
-	import org.syncon.popups.views.IPopup;
+	import org.syncon.popups.view.IPopup;
 	
 	import sss.Shelpers.Shelpers.ui.PopupCode;
 

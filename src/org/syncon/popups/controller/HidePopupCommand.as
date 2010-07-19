@@ -4,7 +4,7 @@ package org.syncon.popups.controller
 	
 	import org.robotlegs.mvcs.Command;
 	import org.syncon.popups.model.PopupModel;
-	import org.syncon.popups.views.IPopup;
+	import org.syncon.popups.view.IPopup;
 	
 	import sss.Shelpers.Shelpers.ui.PopupCode;
 	

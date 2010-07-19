@@ -70,17 +70,21 @@ package sss.Shelpers.Shelpers.ui
      public var nonPopup : Boolean = false; 
      public var adjustAlpha : Boolean = true;
      public var maxAlpha : Number = 1
-     public var centerByDefault : Boolean = false 
+     public var centerByDefault : Boolean = false
+     static public var centerFunction : Function; 
      public var fadeTime : Number = 0.6
      public function open( toggle : Boolean = true, center : Boolean = false,bringToTop : Boolean = true  )  : void
      {
      	if ( this.showing == false) 
      	{
      		this.showing = true
-     		if ( center ) 
-     			ShelpersPopups.Center( popup )
-     		if ( centerByDefault && center == false  ) 
-     			 ShelpersPopups.Center( popup )
+     		if ( center || ( centerByDefault && center == false  )  ) 
+     		{
+     			if ( centerFunction == null ) 
+     				ShelpersPopups.Center( popup )
+     			else
+     				centerFunction( popup ) 
+     		}
      		if ( bringToTop && this.nonPopup == false  ) 
      			this.bringToFront()
      		if ( this.adjustAlpha ) 

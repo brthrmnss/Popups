@@ -2,11 +2,11 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
 	  backgroundColor="0xFFFFFF" 
 	 creationComplete="onInit()" 
-	 implements="org.syncon.popups.views.IPopup" >
+	 implements="org.syncon.popups.view.IPopup" >
  
 	<mx:Script>
 		<![CDATA[
-			import org.syncon.popups.views.IPopup;
+			import org.syncon.popups.view.IPopup;
 			import mx.core.UIComponent;
 			
 			import sss.Shelpers.Shelpers.Shelpers;

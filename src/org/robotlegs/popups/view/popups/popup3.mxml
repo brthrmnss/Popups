@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
-	  backgroundColor="0xFFFFFF" 
-	 creationComplete="onInit()" 
-	 implements="org.syncon.popups.views.IPopup" >
+	  backgroundColor="0xFFFFFF"  
+	 creationComplete="onInit()"  styleName="popupSkin"
+	 implements="org.syncon.popups.view.IPopup" >
  
 	<mx:Script>
 		<![CDATA[
-			import org.syncon.popups.views.IPopup;
+			import org.syncon.popups.view.IPopup;
 			import mx.core.UIComponent;
 			
 			import sss.Shelpers.Shelpers.Shelpers;
@@ -43,11 +43,13 @@
  
 		]]>
 	</mx:Script>
-	 
-	 <mx:Button label="Close" click="{this.hide()}" right="0" />
+	<!-- 
+	 <mx:Button label="Close" click="{this.hide()}" right="0" />-->
 	<mx:VBox y="25" >
 		<mx:Label fontSize="24" text="3" />
 		<mx:TextInput />
 	</mx:VBox>
-</mx:Canvas>
+	
+	<mx:Button styleName="closeBtn" click="{this.hide()}" right="0" />
+</mx:Canvas> 
 

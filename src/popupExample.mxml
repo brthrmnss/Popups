@@ -10,7 +10,9 @@
 > 
 	<!--<mx:Style source="assets/resume_pt2.css" />-->
 	<!--<mx:Style source="assets/css/yflexskin2/eclosetocss.css" />-->
-	<mx:Style source="org/robotlegs/popups/view/skins/default_popup_skins.css" />
+	<mx:Style source="org/syncon/popups/view/skins/default_popup_skins.css" />
+	<mx:Style source="assets/default_skin.css" />
+	
 	
 	<mx:Script>
 		<![CDATA[

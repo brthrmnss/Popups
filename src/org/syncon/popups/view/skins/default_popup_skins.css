@@ -1,0 +1,17 @@
+  
+            .popupSkin
+            {
+            	/*
+            	border-skin: ClassReference( "org.robotlegs.popups.view.skins.popupSkin" );
+            	*/
+            	border-skin: ClassReference( "org.syncon.popups.view.skins.DefaultPopupSkin" );
+            }                  
+		     
+		  
+		.closeBtn {
+		upSkin: Embed(source="close.png");
+		downSkin: Embed(source="close.png");
+		overSkin: Embed(source="close.png");
+		disabledSkin: Embed(source="close.png");
+		}
+		 

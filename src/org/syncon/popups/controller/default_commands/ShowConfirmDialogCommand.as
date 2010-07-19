@@ -1,7 +1,6 @@
-package  org.robotlegs.popups.controller.default_commands
+package  org.syncon.popups.controller.default_commands
 {
 	import org.robotlegs.mvcs.Command;
-	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
 	import org.syncon.popups.controller.ShowPopupEvent;
 	import org.syncon.popups.model.PopupModel;
 	

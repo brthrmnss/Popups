@@ -1,4 +1,4 @@
-package org.robotlegs.popups.view
+package org.robotlegs.popups.view.popups
 {
 	import flash.events.Event;
 	

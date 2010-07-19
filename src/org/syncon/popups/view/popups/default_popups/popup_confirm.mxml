@@ -4,7 +4,7 @@
    creationComplete="init()"
   verticalScrollPolicy="off" horizontalScrollPolicy="off"   borderStyle="solid" borderThickness="1"
    paddingBottom="10" backgroundColor="0xFFFFFF" borderColor="0xd2d2d2"
-    implements="org.syncon.popups.views.IPopup" >
+    implements="org.syncon.popups.view.IPopup" >
  
    <!---
    -->
@@ -13,7 +13,7 @@
 		import mx.core.UIComponent;
 		import mx.events.ResizeEvent;
 		
-		import org.syncon.popups.views.IPopup;
+		import org.syncon.popups.view.IPopup;
 		
 		import sss.Shelpers.Shelpers.ShelpersPopups;
 		import sss.Shelpers.Shelpers.ShelpersUI;

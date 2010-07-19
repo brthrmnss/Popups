@@ -1,8 +1,7 @@
-package org.robotlegs.popups.view
+package  org.robotlegs.popups.view.popups
 {
 	import flash.events.Event;
 	import org.robotlegs.mvcs.Mediator;
-	import org.robotlegs.popups.view.popups.popup2;
 	
 	public class Popup2Mediator extends Mediator
 	{
