@@ -15,7 +15,6 @@ package org.syncon.popups
 	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogCommand;
 	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
 	import org.syncon.popups.model.*;
-	import org.robotlegs.popups.services.*;
 	import org.robotlegs.popups.view.*;
 	import org.robotlegs.popups.view.popups.*;
 	import org.robotlegs.popups.view.popups.default_popups.*;
@@ -53,10 +52,8 @@ package org.syncon.popups
 		override public function startup():void
 		{
 			// Model
-			injector.mapSingletonOf( IAppModel, AppModel  )			
 			// Controller
 			// Services
-			injector.mapSingletonOf(IAuthService, DummyAuthService);
 			// View
 	
 			this.startupPopupSubContext()

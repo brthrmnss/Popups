@@ -5,7 +5,6 @@ package org.robotlegs.popups.view
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.robotlegs.popups.view.popups.stockprice_popup;
-	import org.robotlegs.stockchart.model.StockChartModel;
 
 	//import org.robotlegs.stockchart.model.StockChartModelEvent;
 	

@@ -7,7 +7,6 @@ package org.robotlegs.popups.view
 	import org.syncon.popups.model.PopupModel;
 	import org.robotlegs.popups.view.popups.default_popups.popup_modal_bg;
 	import org.robotlegs.popups.view.popups.stockprice_popup;
-	import org.robotlegs.stockchart.model.StockChartModel;
 
 	//import org.robotlegs.stockchart.model.StockChartModelEvent;
 	

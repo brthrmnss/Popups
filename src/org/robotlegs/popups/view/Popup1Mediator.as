@@ -14,7 +14,7 @@ package org.robotlegs.popups.view
 		} 
 		
 		override public function onRegister():void
-		{
+		{ 
 			eventMap.mapListener(eventDispatcher, StockPricePopupEvent.SHOW_POPUP, onShowPopup );
 			eventMap.mapListener(eventDispatcher, StockPricePopupEvent.HIDE_POPUP, onHidePopup);
 		}

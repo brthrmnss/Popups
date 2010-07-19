@@ -9,18 +9,12 @@
 				xmlns:ui="org.robotlegs.stockchart.view.ui.*" xmlns:popups="org.syncon.popups.*" xmlns:view1="org.robotlegs.popups.view.*"
 > 
 	<!--<mx:Style source="assets/resume_pt2.css" />-->
-	<mx:Style source="assets/css/yflexskin2/eclosetocss.css" />
-
+	<!--<mx:Style source="assets/css/yflexskin2/eclosetocss.css" />-->
+	<mx:Style source="org/robotlegs/popups/view/skins/default_popup_skins.css" />
+	
 	<mx:Script>
 		<![CDATA[
-			
-			
-			[Embed(source="/assets/css/yflexskin2/fonts3/AlteHaasGroteskRegular.ttf",
-			fontName="ArialEmbedded", fontStyle="normal")]
-			private var myNormalLucida:Class;
-			
 			private function onInitialize():void {
-				Font.registerFont(myNormalLucida)
 			}
 			
 			public function onCreationComplete() : void{

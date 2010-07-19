@@ -1,7 +1,55 @@
   
             .popupSkin
             {
+            	/*
             	border-skin: ClassReference( "org.robotlegs.popups.view.skins.popupSkin" );
+            	*/
+            	border-skin: ClassReference( "org.robotlegs.popups.view.skins.DefaultPopupSkin" );
             }                  
      
-  
+  @font-face {
+    src: local("Arial");
+    fontFamily: ArialEmbedded;
+    fontWeight: normal;
+     
+    advancedAntiAliasing: true;    
+    unicodeRange:
+        U+0041-U+005A, /* Upper-Case [A..Z] */
+        U+0061-U+007A, /* Lower-Case a-z */
+        U+0030-U+0039, /* Numbers [0..9] */
+        U+002E-U+002E, /* Period [.] */    
+		U+0020-U+002F, /* Punctuation */
+		U+003A-U+0040, /* Punctuation */
+		U+005B-U+0060, /* Punctuation */
+		U+007B-U+007E; /* Punctuation */        
+}
+ 
+@font-face {
+    src: local("Arial");
+    fontFamily: ArialEmbedded;
+    fontWeight: bold;
+ 
+    advancedAntiAliasing: true;    
+    unicodeRange:
+        U+0041-U+005A, /* Upper-Case [A..Z] */
+        U+0061-U+007A, /* Lower-Case a-z */
+        U+0030-U+0039, /* Numbers [0..9] */
+        U+002E-U+002E, /* Period [.] */   
+		U+0020-U+002F, /* Punctuation */
+		U+003A-U+0040, /* Punctuation */
+		U+005B-U+0060, /* Punctuation */
+		U+007B-U+007E; /* Punctuation */         
+}
+ 
+Application {
+    font-family: ArialEmbedded;
+}
+
+
+.closeBtn {
+upSkin: Embed(source="close.png");
+downSkin: Embed(source="close.png");
+overSkin: Embed(source="close.png");
+disabledSkin: Embed(source="close.png");
+}
+ 

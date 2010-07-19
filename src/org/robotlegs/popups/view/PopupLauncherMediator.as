@@ -11,7 +11,6 @@ package org.robotlegs.popups.view
 	import org.syncon.popups.controller.ShowPopupEvent;
 	import org.robotlegs.popups.controller.default_commands.ShowAlertMessageTriggerEvent;
 	import org.robotlegs.popups.controller.default_commands.ShowConfirmDialogTriggerEvent;
-	import org.robotlegs.stockchart.view.ui.popup_launcher;
 	
 	public class PopupLauncherMediator extends Mediator
 	{
@@ -54,7 +53,10 @@ package org.robotlegs.popups.view
 		
 		private function onAlert(e:MouseEvent):void
 		{
-			this.dispatch( new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message') ) 
+			this.dispatch( new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message') )
+			import flash.utils.setTimeout;
+			setTimeout( this.dispatch, 1500,  new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message2' ))
+			 
 		}
 		
 		private function onConfirm(e:MouseEvent):void

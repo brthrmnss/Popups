@@ -17,8 +17,6 @@ package org.syncon.popups.model
 	import org.syncon.popups.controller.CreatePopupCommand;
 	import org.syncon.popups.controller.CreatePopupEvent;
 	import org.syncon.popups.views.IPopup;
-	import org.robotlegs.stockchart.model.vo.StockPriceVO;
-	import org.robotlegs.stockchart.view.ChartPageEvent;
 	
 	import sss.Shelpers.Shelpers.ui.PopupCode;
 
