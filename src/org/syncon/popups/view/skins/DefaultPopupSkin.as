@@ -42,7 +42,7 @@ package  org.syncon.popups.view.skins {
        		backgroundColor=0xFFFFFF
        		cornerRadius  = 10;
        }
-       cornerRadius  = 16;
+       cornerRadius  = 8;
        var backgroundAlpha:Number = getStyle("backgroundAlpha");
        graphics.clear();
        
@@ -65,14 +65,17 @@ package  org.syncon.popups.view.skins {
  */
         
         g.beginFill(backgroundColor,1.0);
-     //  g.lineStyle(1, 0xd2d2d2, 1, true);
-     //   g.drawRect(-10, -10, unscaledWidth+20, unscaledHeight+20);
+		g.lineStyle(1, 0x767676, 1, true);
+     //g.drawRect(-10, -10, unscaledWidth+20, unscaledHeight+20);
+		g.drawRoundRectComplex( -10, -10, unscaledWidth+20, unscaledHeight+20,  
+		cornerRadius, cornerRadius, cornerRadius, cornerRadius )
 //       // Background
-       drawRoundRect(-10, -10, unscaledWidth+20, unscaledHeight+20,
+     /*  drawRoundRect(-10, -10, unscaledWidth+20, unscaledHeight+20, 
            {tl:cornerRadius, tr:cornerRadius, bl:cornerRadius, br:cornerRadius},  
-           backgroundColor, backgroundAlpha);        
-       g.endFill()
- 		g.lineStyle(0, 0,0);
+           backgroundColor, backgroundAlpha);        */
+           
+		g.endFill()
+		g.lineStyle(0, 0,0);
  		
  		
  		

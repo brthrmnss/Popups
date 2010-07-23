@@ -55,7 +55,10 @@ package org.robotlegs.popups.view
 		{
 			this.dispatch( new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message') )
 			import flash.utils.setTimeout;
-			setTimeout( this.dispatch, 1500,  new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message2' ))
+			setTimeout( this.dispatch, 1500,  new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message2' 
+			, '', 'NO' ))
+			setTimeout( this.dispatch, 1800,  new  ShowAlertMessageTriggerEvent ( ShowAlertMessageTriggerEvent.SHOW_ALERT_POPUP, 'This is an alert' , 'This is the message2' 
+			, '', 'NO', false ))			
 			 
 		}
 		

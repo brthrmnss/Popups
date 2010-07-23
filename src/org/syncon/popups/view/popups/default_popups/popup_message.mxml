@@ -93,11 +93,28 @@
 	            }
 	        }
 	
-	        public function loadAlert( msg:String, title:String ): void
+	        public function loadAlert( msg:String, title:String, buttonLabel : String = 'OK', 
+				 showButton : Boolean = true  ): void
 	        {
-	            this.load(title, msg, true, true)
+	            this.load(title, msg, true, true) 
+	            this.adjustButton( buttonLabel, showButton)
 	        }
-	
+			
+			
+			private function adjustButton(buttonLabel_ : String = 'OK', 
+				 showButton_ : Boolean = true  )  : void
+				 {
+				 	this.btnOk.label = buttonLabel_
+				 	if (  showButton_ ) 
+				 	{
+				 		ShelpersUI.tryToAddTo( this.btnOk, this.hbo ) 
+				 	}
+				 	else
+				 	{
+				 		ShelpersUI.tryToRemove( this.btnOk ) 
+				 	}
+				 }
+			
 	        public function load( t:String, textt:String, small:Boolean = true, center:Boolean = false ): void
 	        {
 	             this.currentState = '' 
@@ -177,7 +194,7 @@
 			 borderStyle="none" backgroundAlpha="0.0"
 			id="txtTxt" fontSize="12" updateComplete="{this.onChangeText()}" condenseWhite="true"
 	        color="0" fontWeight="bold"  width="600" height="356"   />
-	    <mx:HBox horizontalAlign="center" width="100%">
+	    <mx:HBox id="hbo" horizontalAlign="center" width="100%">
 	        <mx:Button label="OK" styleName="goButton" click="close()" id="btnOk" bottom="0" />
 	    </mx:HBox>
 </mx:VBox>

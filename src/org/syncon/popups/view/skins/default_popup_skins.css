@@ -9,9 +9,9 @@
 		     
 		  
 		.closeBtn {
-		upSkin: Embed(source="close.png");
-		downSkin: Embed(source="close.png");
-		overSkin: Embed(source="close.png");
-		disabledSkin: Embed(source="close.png");
+		upSkin: Embed(source="closeButton.png");
+		downSkin: Embed(source="closeButton.png");
+		overSkin: Embed(source="closeButton.png");
+		disabledSkin: Embed(source="closeButton.png");
 		}
 		 
