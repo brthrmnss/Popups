@@ -28,7 +28,7 @@ package org.syncon.popups.controller.default_commands
 		
 		public function ShowConfirmDialogTriggerEvent(type:String,
 													  msg :  String, yesFx : Function, noFx : Function = null,
-													  titleLbl : String = 'Alert', yesBtn : String =' Ok', noBtn : String = 'Cancel', args : Array = null , 
+													  titleLbl_ : String = 'Alert', yesBtn : String =' Ok', noBtn : String = 'Cancel', args : Array = null , 
 													  popupName_ : String = '' )
 		{	
 			this.message = msg
@@ -36,9 +36,9 @@ package org.syncon.popups.controller.default_commands
 			this.yesFx = yesFx
 			this.noFx = noFx
 			this.args = args
-			this.titleLbl = ''
+			this.titleLbl = titleLbl_
 			this.yesMessage = yesBtn		
-				
+			this.noMessage = noBtn		
 			if ( popupName_ != '' ) 
 				this.popupName = popupName_				
 				

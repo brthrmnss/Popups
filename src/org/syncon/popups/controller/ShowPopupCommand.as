@@ -24,6 +24,10 @@ package org.syncon.popups.controller
 		override public function execute():void
 		{
 			var popup  : IPopup   = this.popupModel.locatePopup( event.name, event.class_, event.popup )
+			if ( popup ==  null ) 
+			{
+				throw 'Could not locate popup for '  + [ event.name, event.class_, event.popup ].join(' or ') 
+			}		
 			this.loadedPopup = popup
 			if ( popup.popupCode.creationComplete == false ) 
 			{
