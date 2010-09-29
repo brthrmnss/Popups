@@ -347,12 +347,21 @@ package org.syncon.popups.model
 			{
 				this.modalOpenBecauseOfUIComponents.removeItemAt(index)
 			}
+			else
+			{
+				return;
+			}
 			//this.model.popupModal.adjustLayer()
 			
 			if ( this.modalOpenBecauseOfUIComponents.length == 0 )
 			{
 				//this.modal = false
 				this.modalPopup.hide()
+			}
+			else
+			{
+				var popupObject : Object = this.modalPopup as Object
+				popupObject.dispatchEvent( new Event( 'adjustLayers' ) )
 			}
 		}
 		

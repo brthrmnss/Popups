@@ -1,6 +1,7 @@
 package  org.syncon.popups.view.popups.default_popups
 {
 	import flash.events.Event;
+	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.popups.model.PopupModel;
 	import org.syncon.popups.view.popups.default_popups.popup_modal_bg;
@@ -33,6 +34,13 @@ package  org.syncon.popups.view.popups.default_popups
 			this.popup.addEventListener(popup_modal_bg.HIDING_MODAL_POPUP , onHidePopup )			
 			this.popupModal.modalPopup = this.popup; 
 			this.popupModal.registerModalPopup( this.popup ) 
+				
+			this.popup.addEventListener( 'adjustLayers', this.onAdjustLayers ) 
+		}
+		
+		private function onAdjustLayers(e:Event):void
+		{
+			this.popup.adjustLayer()
 		}
 /*		
 		private function onLoadChart(e:ChartPageEvent):void

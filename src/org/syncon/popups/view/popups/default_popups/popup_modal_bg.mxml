@@ -77,8 +77,11 @@
 	/*             if ( this.model.popupConfirm.popupCode.showing ) 
 	            	this.model.popupConfirm.popupCode.bringToFront() */
 
-
-	            systemManager.popUpChildren.setChildIndex(DisplayObject(this), systemManager.popUpChildren.numChildren - 2)
+				//systemManager.popUpChildren.
+	            systemManager.popUpChildren.setChildIndex(DisplayObject(this), 
+				 systemManager.popUpChildren.numChildren - 2 )
+				
+				
 	             index  = systemManager.popUpChildren.getChildIndex( DisplayObject(this) )
 	             
 /* 	            	
