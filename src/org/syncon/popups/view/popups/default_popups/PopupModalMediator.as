@@ -4,12 +4,13 @@ package  org.syncon.popups.view.popups.default_popups
 	
 	import org.robotlegs.mvcs.Mediator;
 	import org.syncon.popups.model.PopupModel;
+	import org.syncon.popups.view.IPopup;
 	import org.syncon.popups.view.popups.default_popups.popup_modal_bg;
 	
 	public class PopupModalMediator extends Mediator
 	{
 		[Inject] public var popup:popup_modal_bg
-		[Inject] public var popupModal : PopupModel;
+		[Inject] public var popupModel : PopupModel;
 		
 		public function PopupModalMediator()
 		{
@@ -32,15 +33,27 @@ package  org.syncon.popups.view.popups.default_popups
 			*/
 			this.popup.addEventListener( popup_modal_bg.SHOWING_MODAL_POPUP , onShowPopup )
 			this.popup.addEventListener(popup_modal_bg.HIDING_MODAL_POPUP , onHidePopup )			
-			this.popupModal.modalPopup = this.popup; 
-			this.popupModal.registerModalPopup( this.popup ) 
+			this.popupModel.modalPopup = this.popup; 
+			this.popupModel.registerModalPopup( this.popup ) 
 				
 			this.popup.addEventListener( 'adjustLayers', this.onAdjustLayers ) 
 		}
 		
 		private function onAdjustLayers(e:Event):void
 		{
+			
+			//reoppen popups ni order they were opened 
+
 			this.popup.adjustLayer()
+			for each (var j: IPopup in this.popupModel.openedPopups) //.popUpChildren )
+			{
+				if ( j == null ) continue;
+				
+				if ( j.popupCode.showing && j != this.popup ) {
+					//this.popupCode.bringToFront()
+					j.popupCode.bringToFront()
+				} 					 
+			}				
 		}
 /*		
 		private function onLoadChart(e:ChartPageEvent):void
@@ -81,13 +94,13 @@ package  org.syncon.popups.view.popups.default_popups
 	*/
 		private function onShowPopup(e:Event):void
 		{
-			this.popupModal.modalPopupOpened()
+			this.popupModel.modalPopupOpened()
 		}			
 		
 		private function onHidePopup(e:Event):void
 		{
 	
-			this.popupModal.modalPopupClosed()
+			this.popupModel.modalPopupClosed()
 		}					
 		
 		

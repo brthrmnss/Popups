@@ -83,7 +83,7 @@
 				
 				
 	             index  = systemManager.popUpChildren.getChildIndex( DisplayObject(this) )
-	             
+	            
 /* 	            	
 	            if ( this.model.uiModel.currentState == UiModel.UiState_Outfits ) 
 	            {
