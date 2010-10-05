@@ -25,7 +25,7 @@ package org.syncon.popups.controller
 					var fx : Function = (popup as Object).close
 					fx.apply( popup, event.args )
 				}
-				if ( event.args is Object )
+				else if ( event.args is Object )
 				{
 					//unless there is an easier way, such as knowing names of parameters? 
 					(popup as Object).close2( event.args ) 
