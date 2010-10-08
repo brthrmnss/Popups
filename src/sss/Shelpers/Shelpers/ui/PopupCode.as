@@ -17,6 +17,7 @@ package sss.Shelpers.Shelpers.ui
 	import sss.Shelpers.Shelpers.ShelpersPopups;
 	import sss.Shelpers.Shelpers.ShelpersUI;
 	import sss.Shelpers.Shelpers.ShelpersUI_Part2;
+	import sss.Shelpers.Shelpers.other.TweenerHelpers;
 	
  
    public class PopupCode  
@@ -129,13 +130,19 @@ package sss.Shelpers.Shelpers.ui
      	return false
      	
      }    
+	 /**
+	 * Ensure that any popups that may have partially closen are not included here
+	 * */
      public function close( )  : void
      {
-     	if ( this.showing == false) 
+		 var initShowing : Boolean = this.showing
+		 //don't set alpha b/c sometimes we don't set it 
+     	if ( this.showing == false && this.popup.visible == false   ) 
      	{
      		return;
      	}
-    
+   		var ee :  TweenerHelpers
+		TweenerHelpers.removeTweens( this.popup, ['alpha'] )
  		this.showing = false
  		if ( this.adjustAlpha ) 
  		{
@@ -146,6 +153,7 @@ package sss.Shelpers.Shelpers.ui
  		{
  			setTimeout( this.hideMe, fadeTime*1000 ); //, [popup] )
  		} 
+		if ( initShowing == true )
  		 (this.popup as DisplayObject).dispatchEvent(new Event( POPUP_CLOSED ) ) 
      }    
     public function hideMe()  : void

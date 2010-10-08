@@ -82,10 +82,12 @@ package  sss.Shelpers.Shelpers.other
 	 
 	 static public function removeTweens( fromThis : Object ,  ...props) : Boolean
 	 {
-		 /*
+		 //why not fix this? 
+		
 		 var fx : Function = Tweener.removeTweens
-		return x.apply( this, [fromThis].concat( props )  ) */ 
-	 	return Tweener.removeTweens( fromThis,  props ); 
+			
+		return fx.apply( fromThis, [fromThis].concat( props )  ) //*/ 
+	 	//return Tweener.removeTweens( fromThis,  props ); 
 	 }
 	 
 	 static public function tweeenToXY( ui : Object , time : Number,  x : Number, y : Number, transition :  String = 'easeOutExpo' ) :  void
