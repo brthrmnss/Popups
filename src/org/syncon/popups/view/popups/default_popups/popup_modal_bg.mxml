@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()"
 		 backgroundColor="0" backgroundAlpha="0.4" implements="org.syncon.popups.view.IPopup" >
-    <mx:Script>
+    <!--
+	<fx:Metadata>
+		[Event(name="adjustLayers", type="org.syncon.evernote.basic.model.CustomEvent")]		
+	</fx:Metadata>		
+		
+	-->
+	<mx:Script>
         <![CDATA[
 			import mx.core.UIComponent;
 			import mx.managers.PopUpManager;
@@ -13,6 +19,8 @@
         
 			private var creationComplete:Boolean = false
 	
+			static public var AdjustLayers :  String = 'adjustLayers' 
+				
 	        public function init(): void
 	        {
 	        	//this.setStyle('backgroundColor', 0xECE9D8 )
@@ -28,6 +36,7 @@
 	        public function onClicked( e:Event ): void
 	        {
 	            this.adjustLayer()
+				this.dispatchEvent(  new Event( AdjustLayers) ) 
 	        }
 			
 			private var _popupCode :   PopupCode; 
@@ -47,6 +56,7 @@
 			 * */
 	        public function adjustLayer(): void
 	        {
+				
 	             var index : int = systemManager.popUpChildren.getChildIndex( DisplayObject(this) )
 	        	var changedPopupSetting :  Boolean = false
 /* 	        	if ( this.model.indexingPopups == false ) 
@@ -120,7 +130,7 @@
 	            this.bringPopupsToFrontIfVisible( putOnTopIfShowing2, false ) 	            
 	            this.bringPopupsToFrontIfVisible( putOnTopIfShowing, true ) 
 	             */
- 
+				
 	        }
 	
 			public function bringPopupsToFrontIfVisible(popups : Array, bringModalBehindIt : Boolean = false )  : void

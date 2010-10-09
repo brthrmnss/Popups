@@ -10,6 +10,9 @@ package org.syncon.popups.test.cases
 	import org.flexunit.Assert;
 	import org.flexunit.async.Async;
 	import org.fluint.uiImpersonation.UIImpersonator;
+	import org.robotlegs.popups.view.popups.popup1;
+	import org.swiftsuspenders.Injector;
+	import org.swiftsuspenders.Reflector;
 	import org.syncon.popups.controller.CreatePopupCommand;
 	import org.syncon.popups.controller.CreatePopupEvent;
 	import org.syncon.popups.controller.RemovePopupCommand;
@@ -18,10 +21,7 @@ package org.syncon.popups.test.cases
 	import org.syncon.popups.controller.ShowPopupEvent;
 	import org.syncon.popups.model.PopupModel;
 	import org.syncon.popups.view.IPopup;
-	import org.robotlegs.popups.view.popups.popup1;
-	import org.robotlegs.popups.view.popups.test_popup;
-	import org.swiftsuspenders.Injector;
-	import org.swiftsuspenders.Reflector;
+	import org.syncon.popups.view.popups.test_popup;
 	
 	import sss.Shelpers.Shelpers.ui.PopupCode;
 

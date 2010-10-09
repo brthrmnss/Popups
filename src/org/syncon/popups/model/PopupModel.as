@@ -157,6 +157,15 @@ package org.syncon.popups.model
 			}				
 			return null
 		}
+		/**
+		 * 
+		 * @param name
+		 * @param class_
+		 * @param popup
+		 * @param createIfRegistered - when hiding popups , do not create them if you don't want to see them
+		 * @return 
+		 * 
+		 */
 		public function locatePopup( name : String = '', class_ : Class=null, popup : Object =  null, createIfRegistered : Boolean = true  )  :  IPopup
 		{
 			if ( name == '' && popup == null && class_ == null )
@@ -165,6 +174,7 @@ package org.syncon.popups.model
 				//throw?
 				return null;
 			}
+			//look for it in the registered but not yet created popups
 			if ( name != '' ) 
 			{
 				if ( this.registeredPopups[name] != null && createIfRegistered )

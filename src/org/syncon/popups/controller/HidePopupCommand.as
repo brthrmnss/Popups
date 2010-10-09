@@ -15,7 +15,9 @@ package org.syncon.popups.controller
 		
 		override public function execute():void
 		{
-			var popup  : IPopup   = this.popupModel.locatePopup( event.name, event.class_, event.popup )
+			var popup  : IPopup   = this.popupModel.locatePopup( event.name, event.class_, event.popup, false )
+			//if popup not found it didn't exist
+			if ( popup == null ) return; 
 		 	if ( event.args == null    ) 
 				popup.hide()
 			else
